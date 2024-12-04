@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin_dashboard.css') }}">
+  <title>Admin Dashboard</title>
+</head>
+<body>
+
+  <div class="top-nav">
+    <div class="hamburger-icon" onclick="toggleSidebar()">&#9776;</div>
+    <p class="welcome-message">Welcome, Admin!</p>
+    <div class="dropdown">
+      <button class="dropbtn report-button">Reports</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('clubhouse_report') }}">Clubhouse</a>
+        <a href="{{ url_for('staff_report') }}">Staff</a>
+        <a href="{{ url_for('committee_report') }}">Committee</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <span class="profile-icon" onclick="toggleDropdown()">👤</span>
+      <div class="dropdown-content" id="dropdownContent">
+        <a href="{{ url_for('admin_profile') }}">Profile</a>
+        <a href="{{ url_for('admin_password') }}">Change Password</a>
+        <a href="{{ url_for('index') }}">Logout</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="sidebar" id="sidebar">
+    <span class="close-icon" onclick="toggleSidebar()">&times;</span>
+    <a href="{{ url_for('notice_info') }}">Notices</a>
+    <a href="{{ url_for('complaint') }}">Complaints & Suggestions</a>
+    <a href="{{ url_for('flat_info') }}">Flat Details</a>
+    <a href="{{ url_for('staff_info') }}">Staff Details</a>
+    <a href="{{ url_for('committee_info') }}">Committee Details</a>
+    <a href="{{ url_for('owner_info') }}">Owner Details</a>
+    <a href="{{ url_for('tenant_info') }}">Tenant Details</a>
+    <a href="{{ url_for('parking_info') }}">Parking Details</a>
+    <a href="{{ url_for('maintenance_info') }}">Maintenance Defaulter List</a>
+  </div>
+
+<div class="main-content" id="mainContent">
+  <!-- Admin Dashboard Content -->
+  <h2>Admin Dashboard</h2>
+  <div class="dashboard-cards">
+    <!-- Card for Notices -->
+    <div class="dashboard-card">
+      <h3>Notices</h3>
+      <p>Total Notices: {{ total_notices }}</p>
+      <a href="{{ url_for('notice_info') }}" class="btn">View Notices</a>
+    </div>
+    <!-- Card for Complaints -->
+    <div class="dashboard-card">
+      <h3>Complaints</h3>
+      <p>Total Complaints: {{ total_complaints }}</p>
+      <a href="{{ url_for('complaint') }}" class="btn">View Complaints</a>
+    </div>
+    <!-- Card for Flat Details -->
+    <div class="dashboard-card">
+      <h3>Flat Details</h3>
+      <p>Total Flats: {{ total_flats }}</p>
+      <a href="{{ url_for('flat_info') }}" class="btn">Manage Flats</a>
+    </div>
+    <!-- Add more cards for other aspects of the system -->
+    <!-- Card for Staff Details -->
+    <div class="dashboard-card">
+      <h3>Staff Details</h3>
+      <p>Total Staff: {{ total_staff }}</p>
+      <a href="{{ url_for('staff_info') }}" class="btn">Manage Staff</a>
+    </div>
+    <!-- Card for Committee Details -->
+    <div class="dashboard-card">
+      <h3>Committee Details</h3>
+      <p>Total Committee Members: {{ total_committee }}</p>
+      <a href="{{ url_for('committee_info') }}" class="btn">Manage Committee</a>
+    </div>
+    <!-- Card for Owner Details -->
+    <div class="dashboard-card">
+      <h3>Owner Details</h3>
+      <p>Total Owners: {{ total_owners }}</p>
+      <a href="{{ url_for('owner_info') }}" class="btn">Manage Owners</a>
+    </div>
+    <!-- Card for Tenant Details -->
+    <div class="dashboard-card">
+      <h3>Tenant Details</h3>
+      <p>Total Tenants: {{ total_tenants }}</p>
+      <a href="{{ url_for('tenant_info') }}" class="btn">Manage Tenants</a>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+function toggleSidebar() {
+  var sidebar = document.getElementById("sidebar");
+  var mainContent = document.getElementById("mainContent");
+  document.body.classList.toggle("sidebar-open");
+  sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+  mainContent.style.marginLeft = (mainContent.style.marginLeft === "250px") ? "0" : "250px";
+}
+
+function toggleDropdown() {
+  var dropdownContent = document.getElementById("dropdownContent");
+  dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.profile-icon')) {
+    var dropdownContent = document.getElementById("dropdownContent");
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    }
+  }
+}
+</script>
+
+</body>
+</html>

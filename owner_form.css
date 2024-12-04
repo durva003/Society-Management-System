@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #def2f1; /* Light blue background */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2b7a78; /* Dark turquoise text color */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff; /* White background */
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.column {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.column:last-child {
+    margin-right: 0;
+}
+
+.column label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #2b7a78; /* Dark turquoise text color */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+input[type="password"],
+select {
+    width: calc(100% - 24px); /* Subtracting padding and border width */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+input[type="submit"]{
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3aafa9; /* Default button background color */
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth hover transition */
+    margin-bottom: 10px; /* Add space between buttons */
+    
+}
+.back-button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 4px;
+    background-color: #3aafa9; /* Default button background color */
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; /* Smooth hover transition */
+    margin-bottom: 10px; /* Add space between buttons */
+}
+
+.back-button:hover {
+    background-color: #bbb; /* Light gray background on hover */
+}

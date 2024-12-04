@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tenant_form.css') }}">
+    <title>Tenant Details Form</title>
+</head>
+<body>
+
+    <form action="{{ url_for('submit_tenant') }}" method="post" class="form-container">
+        <h1>Tenant Details Form</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+        <div class="row">
+            <div class="column">
+                <label for="MemberId">Member Id:</label>
+                <input type="text" id="MemberId" name="MemberId" value="{{ existing_data['member_id'] }}" readonly>
+                
+                <label for="memberUsername">Username:</label>
+                <input type="text" id="memberUsername" name="memberUsername" value="{{ existing_data['member_username'] }}" readonly>
+                
+                <label for="OwnerName">Owner Name:</label>
+                <input type="text" id="OwnerName" name="OwnerName" value="{{ existing_data['owner_name'] }}" readonly>
+                
+                <label for="wing">Wing:</label>
+                <input type="text" id="wing" name="wing" maxlength="5" value="{{ existing_data['wing'] }}" readonly>
+                
+                <label for="TenantName">Tenant Name:</label>
+                <input type="text" id="TenantName" name="TenantName">
+                
+                <label for="flatNo">Flat Number:</label>
+                <input type="number" id="flatNo" name="flatNo" min="0" max="99999" value="{{ existing_data['flat_number'] }}" readonly>
+            </div>
+
+            <div class="column">
+                <label for="tenantContact">Tenant Contact Number:</label>
+                <input type="tel" id="tenantContact" name="tenantContact" pattern="[0-9]{10}" title="Please enter a 10-digit number" required>
+                
+                <label for="tenantEmail">Tenant Email ID:</label>
+                <input type="email" id="tenantEmail" name="tenantEmail" maxlength="30" required>
+                
+                <label for="noAdult">Number of Adults:</label>
+                <input type="number" id="noAdult" name="noAdult" min="0" max="99999" required>
+                
+                <label for="noChildren">Number of Children:</label>
+                <input type="number" id="noChildren" name="noChildren" min="0" max="99999" required>
+                
+                <label for="noPet">Number of Pets:</label>
+                <input type="number" id="noPet" name="noPet" min="0" max="99999" required>
+            </div>
+
+        </div>
+
+        <input type="submit" value="Submit">
+        <button class="back-button" onclick="goBack()">Back</button>
+        
+    </form>
+
+    <script>
+        function goBack() {
+            window.location.href = "{{ url_for('member_dashboard') }}";
+        }
+    </script>
+</body>
+</html>

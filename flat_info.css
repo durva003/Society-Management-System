@@ -1,0 +1,245 @@
+/* Reset CSS for consistent rendering */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #def2f1; /* Background color */
+    color: #17252a; /* Text color */
+    line-height: 1.6;
+    font-size: 14px; /* Default font size */
+}
+
+/* Container styles */
+.flat-info-container {
+    width: 80%; /* Increased container width */
+    margin: 20px auto;
+    padding: 15px; /* Default padding */
+    background-color: #feffff;
+    border-radius: 6px; /* Default border radius */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.flat-info-container h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px; /* Default font size */
+    color: #2b7a78; /* Header text color */
+    text-transform: uppercase;
+    margin-bottom: 10px; /* Default margin */
+}
+
+/* Button styles */
+.back-button button,
+.form-buttons button {
+    padding: 8px 14px; /* Default padding */
+    font-size: 12px; /* Default font size */
+    background-color: #3aafa9; /* Default button background color */
+    color: #feffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.back-button button:hover,
+.form-buttons button:hover {
+    background-color: #2b7a78; /* Button background color on hover */
+}
+
+.edit-button {
+    padding: 8px 16px; /* Default padding */
+    font-size: 12px; /* Default font size */
+    background-color: #57ba98; /* Button background color */
+    color: #feffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    margin-right: 5px;
+}
+
+.edit-button:hover {
+    background-color: #3ba19d; /* Button background color on hover */
+}
+
+/* Table styles */
+#flatTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px; /* Default margin */
+    border-radius: 6px; /* Default border radius */
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    padding: 8px;
+    border-left: 1px solid #ccc; /* Standing lines between table cells */
+    border-right: 1px solid #ccc; /* Standing lines between table cells */
+    text-align: left;
+}
+
+th:first-child,
+td:first-child {
+    border-left: none; /* Remove left border from first column */
+}
+
+th:last-child,
+td:last-child {
+    border-right: none; /* Remove right border from last column */
+}
+
+th {
+    background-color: #2b7a78; /* Table header background color */
+    color: #feffff;
+    text-transform: uppercase;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #feffff; /* Alternate row background color */
+}
+
+/* Hover effect on table rows */
+tbody tr:hover {
+    background-color: #def2f1; /* Hovered row background color */
+}
+
+/* Pagination styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px; /* Default margin */
+}
+
+.pagination a {
+    padding: 6px 12px; /* Default padding */
+    font-size: 12px; /* Default font size */
+    text-decoration: none;
+    color: #feffff;
+    background-color: #3aafa9; /* Pagination button background color */
+    border-radius: 4px;
+    margin: 0 4px; /* Default margin */
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #2b7a78; /* Pagination button background color on hover */
+}
+
+.pagination p {
+    margin: 0 8px; /* Default margin */
+}
+
+/* Edit Flat Form Container */
+.edit-form-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0f6f6; /* Form background color */
+    padding: 20px; /* Increased padding */
+    width: 400px; /* Increased width */
+    border-radius: 6px; /* Default border radius */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.edit-form-container h2 {
+    margin-bottom: 15px; /* Default margin */
+    color: #17252a; /* Form header text color */
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px; /* Default font size */
+}
+
+.form-group {
+    margin-bottom: 10px; /* Default margin */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #17252a; /* Label text color */
+    font-size: 14px; /* Default font size */
+}
+
+.form-group select,
+.form-group input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 8px; /* Default margin */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px; /* Default font size */
+}
+
+.form-group select {
+    width: 100%;
+}
+
+.form-buttons {
+    text-align: center;
+}
+
+.form-buttons button {
+    padding: 8px 16px; /* Default padding */
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px; /* Default font size */
+}
+
+.form-buttons .update-button {
+    background-color: #3aafa9; /* Button background color */
+    color: #feffff;
+}
+
+.form-buttons .update-button:hover {
+    background-color: #2b7a78; /* Button background color on hover */
+}
+
+.form-buttons .close-button {
+    background-color: #e74c3c; /* Button background color */
+    color: #feffff;
+}
+
+.form-buttons .close-button:hover {
+    background-color: #c0392b; /* Button background color on hover */
+}
+
+/* Pop-up Message for Edit Flat Form */
+.popup-message {
+    display: none;
+    text-align: center;
+    padding: 8px; /* Default padding */
+    margin-top: 10px; /* Default margin */
+    border-radius: 4px;
+    font-size: 12px; /* Default font size */
+}
+
+.popup-message.success {
+    background-color: #4caf50;
+}
+
+.popup-message.error {
+    background-color: #e74c3c;
+}
+
+.popup-message.show {
+    display: block;
+}

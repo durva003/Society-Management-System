@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='staff_info.css') }}">
+    <title>Staff Details</title>
+</head>
+<body>
+<div class="container">
+    <div class="staff-info-container">
+        <h2><div class="add-back-buttons">
+            <div class="back-button">
+                <button onclick="location.href='/admin_dashboard'">Back</button>
+            </div>
+            Staff Details
+            <div class="add-button">
+                <button id="addStaffBtn" onclick="showForm()">Add Staff</button>
+            </div>
+        </div></h2>
+
+        <table id="staffTable">
+            <thead>
+                <tr>
+                    <th id="id-column">ID</th>
+                    <th>Name</th>
+                    <th>Work</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Duration</th>
+                    <th class="action-column">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff in staff_members %}
+                    <tr>
+                        <td>{{ staff.id }}</td>
+                        <td>{{ staff.name }}</td>
+                        <td>{{ staff.work }}</td>
+                        <td>{{ staff.contact }}</td>
+                        <td>{{ staff.address }}</td>
+                        <td>{{ staff.start }}</td>
+                        <td>{{ staff.end }}</td>
+                        <td>{{ staff.duration }}</td>
+                        <td class="action-column">
+                            <button class="edit-button" onclick="openEditForm({{ staff.id }}, '{{ staff.name }}', '{{ staff.work }}', '{{ staff.contact }}', '{{ staff.address }}', '{{ staff.start }}', '{{ staff.end }}', '{{ staff.duration }}')">Edit</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="{{ url_for('staff_info', page=page-1) }}">Previous</a>
+            {% endif %}
+            <p>Page {{ page }}</p>
+            {% if staff_members|length == 10 %}
+                <a href="{{ url_for('staff_info', page=page+1) }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Add Staff Form Container -->
+    <div class="form-container" id="addStaffForm">
+        <h2>Add Staff</h2>
+
+        <form id="addStaffForm" action="#" method="post" onsubmit="submitAddForm(event)">
+            <div class="form-group">
+                <label for="staffName">Name:</label>
+                <input type="text" id="staffName" name="staffName" required>
+            </div>
+            <div class="form-group">
+                <label for="staffWork">Work:</label>
+                <select id="staffWork" name="staffWork" required>
+                    <option value="">Select Work</option>
+                    <option value="Security guard">Security Guard</option>
+                    <option value="Cleaner">Cleaner</option>
+                    <option value="Cook">Cook</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Lift repair">Lift Repair</option>
+                    <option value="Maid">Maid</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="staffContact">Contact:</label>
+                <input type="text" id="staffContact" name="staffContact" required>
+            </div>
+            <div class="form-group">
+                <label for="staffAddress">Address:</label>
+                <input type="text" id="staffAddress" name="staffAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="staffStartDate">Start Date:</label>
+                <input type="date" id="staffStartDate" name="staffStartDate" required onchange="calculateDuration()">
+            </div>
+            <div class="form-group">
+                <label for="staffEndDate">End Date:</label>
+                <input type="date" id="staffEndDate" name="staffEndDate" onchange="calculateDuration()">
+            </div>
+            <div class="form-group">
+                <label for="staffDuration">Duration:</label>
+                <input type="text" id="staffDuration" name="staffDuration" readonly>
+            </div>
+            
+            <div class="form-buttons">
+                <button type="submit" class="button add-button">Add</button>
+                <button type="button" class="button clear-button" onclick="clearForm()">Clear</button>
+                <button type="button" class="button close-button" onclick="closeForm()">Close</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Edit Staff Form Container -->
+    <div class="form-container" id="editStaffForm">
+        <h2>Edit Staff</h2>
+
+        <form onsubmit="return submitEditForm()" method="post" action="{{ url_for('update_staff') }}">
+            <input type="hidden" id="editStaffId" name="editStaffId">
+            <div class="form-group">
+                <label for="editStaffName">Name:</label>
+                <input type="text" id="editStaffName" name="editStaffName" required>
+            </div>
+            <div class="form-group">
+                <label for="editStaffWork">Work:</label>
+                <input type="text" id="editStaffWork" name="editStaffWork" required>
+            </div>
+            <div class="form-group">
+                <label for="editStaffContact">Contact:</label>
+                <input type="text" id="editStaffContact" name="editStaffContact" required>
+            </div>
+            <div class="form-group">
+                <label for="editStaffAddress">Address:</label>
+                <input type="text" id="editStaffAddress" name="editStaffAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="editStaffStartDate">Start Date:</label>
+                <input type="date" id="editStaffStartDate" name="editStaffStartDate" required>
+            </div>
+            <div class="form-group">
+                <label for="editStaffEndDate">End Date:</label>
+                <input type="date" id="editStaffEndDate" name="editStaffEndDate">
+            </div>
+            <div class="form-group">
+                <label for="editStaffDuration">Duration:</label>
+                <input type="text" id="editStaffDuration" name="editStaffDuration" readonly>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="button update-button">Update</button>
+                <button type="button" class="button close-button" onclick="closeEditForm()">Close</button>
+            </div>
+        </form>
+
+        <!-- Pop-up Message for Edit Staff Form -->
+        <div class="popup-message" id="editStaffMessage"></div>
+    </div>
+</div>
+<script>
+    function showForm() {
+        document.getElementById('addStaffForm').style.display = 'block';
+    }
+    
+    function closeForm() {
+        document.getElementById('addStaffForm').style.display = 'none';
+    }
+    
+    function openEditForm(id, name, work, contact, address, start, end, duration) {
+        document.getElementById('editStaffId').value = id;
+        document.getElementById('editStaffName').value = name;
+        document.getElementById('editStaffWork').value = work;
+        document.getElementById('editStaffContact').value = contact;
+        document.getElementById('editStaffAddress').value = address;
+        document.getElementById('editStaffStartDate').value = start;
+        document.getElementById('editStaffEndDate').value = end;
+        document.getElementById('editStaffDuration').value = duration;
+    
+        document.getElementById('editStaffForm').style.display = 'block';
+    }
+    
+    function closeEditForm() {
+        document.getElementById('editStaffForm').style.display = 'none';
+    }
+    
+
+    function clearEditForm() {
+        // Add logic to clear the edit form fields
+    }
+
+    function submitAddForm() {
+        // Simulate a successful submission for demonstration purposes
+        const isSuccess = true;
+
+        // Display the appropriate message for Add Staff Form
+        const addMessageElement = document.getElementById('addStaffMessage');
+        addMessageElement.innerText = isSuccess ? 'Data entered successfully' : 'Error';
+        addMessageElement.style.backgroundColor = isSuccess ? '#4caf50' : '#e74c3c';
+        addMessageElement.style.display = 'block';
+    }
+
+    function closeAddMessage() {
+        document.getElementById('addStaffMessage').style.display = 'none';
+    }
+
+    function submitEditForm() {
+        // Simulate a successful submission for demonstration purposes
+        const isSuccess = true;
+
+        // Display the appropriate message for Edit Staff Form
+        const editMessageElement = document.getElementById('editStaffMessage');
+        editMessageElement.innerText = isSuccess ? 'Data updated successfully' : 'Error';
+        editMessageElement.style.backgroundColor = isSuccess ? '#4caf50' : '#e74c3c';
+        editMessageElement.style.display = 'block';
+    }
+
+    function closeEditMessage() {
+        document.getElementById('editStaffMessage').style.display = 'none';
+    }
+
+    function calculateDuration() {
+        const startDate = new Date(document.getElementById('staffStartDate').value);
+        const endDate = new Date(document.getElementById('staffEndDate').value);
+
+        if (!isNaN(startDate) && !isNaN(endDate)) {
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('staffDuration').value = diffDays + ' days';
+        } else {
+            document.getElementById('staffDuration').value = '';
+        }
+    }
+</script>
+
+</body>
+</html>

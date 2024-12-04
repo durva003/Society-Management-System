@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Complaint Form</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='member_complaint_form.css') }}">
+</head>
+<body>
+ <div id="container">
+     <!-- Add Complaint Form Overlay -->
+     <div id="addFormOverlay" class="overlay">
+        <div class="add-form-container">
+            <form action="{{ url_for('submit_complaint') }}" method="POST">
+                <label for="wing">Wing:</label>
+                <select id="wing" name="wing" required>
+                    <option value="" disabled selected>Select Wing</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                </select><br><br>
+                <label for="flat_no">Flat Number:</label>
+                <input type="number" id="flat_no" name="flat_no" min="101" max="1604" required><br><br>
+                <label for="date_of_complaint">Date of Complaint:</label>
+                <input type="date" id="date_of_complaint" name="date_of_complaint" value="{{ current_date }}" min="{{ current_date }}" max="{{ current_date }}" required><br><br>
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason" required></textarea><br><br>
+                <button type="submit">Submit</button>
+                <button type="button" onclick="clearForm()">Clear</button>
+                <button type="button" onclick="closeAddForm()">Close</button>
+            </form>
+        </div>
+    </div>
+
+<h2><div class="button-container">
+    <button class="back-button" onclick="location.href='/member_dashboard'">Back</button>
+  Complaints and Suggestions List
+<button class="add-button" onclick="showAddForm()">Add Suggestion</button></div></h2>
+ 
+<table>
+    <thead>
+        <tr>
+            <th>Complaint ID</th>
+            <th>Wing</th>
+            <th>Flat No</th>
+            <th>Date of Complaint</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Resolved Date</th> <!-- Add this column -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for complaint in complaints %}
+            <tr>
+                <td>{{ complaint.complaint_id }}</td>
+                <td>{{ complaint.wing }}</td>
+                <td>{{ complaint.flat_no }}</td>
+                <td>{{ complaint.date_of_complaint }}</td>
+                <td>{{ complaint.reason }}</td>
+                <td>{{ complaint.status }}</td>
+                <td>{{ complaint.resolved_date }}</td> <!-- Display resolved date -->
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+    <!-- JavaScript for handling add form visibility -->
+<script>
+    function showAddForm() {
+        var addFormOverlay = document.getElementById('addFormOverlay');
+        addFormOverlay.style.display = 'block';
+
+        // Set today's date as the default value for the date input field
+        var today = new Date().toISOString().slice(0, 10);
+        document.getElementById('date_of_complaint').value = today;
+    }
+
+    function closeAddForm() {
+        var addFormOverlay = document.getElementById('addFormOverlay');
+        addFormOverlay.style.display = 'none';
+    }
+
+    function clearForm() {
+        document.getElementById('wing').value = '';
+        document.getElementById('flat_no').value = '';
+        document.getElementById('date_of_complaint').value = '{{ current_date }}';
+        document.getElementById('reason').value = '';
+    }
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="flash-messages">
+        {% for message in messages %}
+        <div class="flash-message">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,441 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #def2f1;
+}
+
+.top-nav {
+  background-color: #17252a;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  color: #feffff;
+  cursor: pointer;
+}
+
+.welcome-message {
+  color: #feffff;
+  font-size: 18px;
+  margin: 0;
+}
+
+.notification-icon {
+  font-size: 24px;
+  color: #feffff;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.profile-icon {
+  font-family: 'FontAwesome';
+  font-size: 24px;
+  color: #feffff;
+  cursor: pointer;
+  margin-right: 5px; /* Reduced margin */
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2b7a78;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  right: 0;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #feffff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #3aafa9;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Additional styling for the dropdown items */
+.dropdown-content a {
+  font-size: 16px;
+}
+
+/* Adjusting spacing inside the dropdown */
+.dropdown-content {
+  padding: 8px 0;
+}
+
+.dropdown-content a {
+  padding: 10px 20px;
+}
+
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #17252a;
+  overflow-x: hidden;
+  transition: width 0.5s; /* Adjusted transition */
+  padding-top: 60px;
+}
+
+.sidebar:hover {
+  width: 250px; /* Increase width on hover */
+}
+
+.close-icon {
+  font-size: 30px;
+  color: #feffff;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  transition: transform 0.3s; /* Added transition for hover effect */
+}
+
+.close-icon:hover {
+  transform: rotate(90deg); /* Rotate icon on hover */
+}
+
+.sidebar a {
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #feffff;
+  display: block;
+  transition: background-color 0.3s, transform 0.3s; /* Added transition */
+  border-bottom: 1px solid transparent; /* Ensure consistent spacing */
+}
+
+.sidebar a:last-child {
+  border-bottom: none;
+}
+
+.sidebar a:hover {
+  background-color: #3aafa9;
+  color: #17252a;
+  transform: translateX(5px); /* Add subtle translation effect on hover */
+}
+
+/* Adjust hover effect for sidebar open state */
+.sidebar-open .sidebar a:hover {
+  transform: none; /* Reset translation effect */
+}
+
+.main-content {
+  margin-left: 0;
+  padding: 20px;
+  background-color: #feffff;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.5s;
+}
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #17252a;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.close-icon {
+  font-size: 30px;
+  color: #feffff;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+.sidebar a {
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #feffff;
+  display: block;
+  transition: 0.3s;
+  border-bottom: 1px solid #feffff;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar a:last-child {
+  border-bottom: none;
+}
+
+.sidebar a:hover {
+  background-color: #feffff;
+  color: #17252a;
+}
+
+.sidebar-open .main-content {
+  margin-left: 250px;
+}
+
+.sidebar a {
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #feffff;
+  display: block;
+  transition: 0.3s;
+  border-bottom: 1px solid #feffff;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar a:first-child {
+  padding-top: 20px;
+}
+
+.sidebar a:last-child {
+  border-bottom: none;
+}
+
+.sidebar a:hover {
+  background-color: #feffff;
+  color: #17252a;
+}
+
+/* Sidebar Icon Styles */
+.sidebar a .icon {
+  margin-right: 10px;
+}
+
+/* Sidebar Text Styles */
+.sidebar a .text {
+  flex: 1;
+}
+
+@media screen and (max-width: 600px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar-open .main-content {
+    margin-left: 0;
+  }
+}
+
+/* New content styles */
+.main-content h2 {
+  margin-bottom: 20px;
+}
+
+.main-content p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.main-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.main-content ul li {
+  margin-bottom: 10px;
+}
+
+.main-content ul li a {
+  color: #333;
+  text-decoration: none;
+}
+
+.main-content ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Dashboard Card Styles */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Four cards in one row */
+  gap: 20px;
+}
+
+.dashboard-card {
+  position: relative;
+  background-color: #def2f1; /* Light grey background */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px; /* Increased padding for better visibility */
+  transition: transform 0.3s; /* Add transition effect */
+  overflow: hidden; /* Hide overflow for pseudo-elements */
+}
+
+/* Unique designs for each card */
+.dashboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Ensure pseudo-element is behind content */
+  opacity: 0.3; /* Reduce opacity */
+}
+
+.dashboard-card:nth-child(1)::before {
+  background: linear-gradient(to bottom, #00bcd4, #03a9f4);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
+}
+
+.dashboard-card:nth-child(2)::before {
+  background: linear-gradient(to bottom, #8e24aa, #9c27b0);
+  clip-path: circle(50% at 50% 50%);
+}
+
+.dashboard-card:nth-child(3)::before {
+  background: linear-gradient(to bottom, #4caf50, #8bc34a);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.dashboard-card:nth-child(4)::before {
+  background: linear-gradient(to bottom, #f4511e, #ff5722);
+  clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%);
+}
+
+.dashboard-card:nth-child(5)::before {
+  background: linear-gradient(to bottom, #ff9800, #ffc107);
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 70%, 0% 100%);
+}
+
+.dashboard-card:nth-child(6)::before {
+  background: linear-gradient(to bottom, #e91e63, #f44336);
+  clip-path: circle(60% at 50% 50%);
+}
+
+.dashboard-card:nth-child(7)::before {
+  background: linear-gradient(to bottom, #673ab7, #7952b3);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.dashboard-card h3 {
+  margin-top: 0;
+  font-size: 18px; /* Adjusted font size */
+  z-index: 1; /* Ensure content is above pseudo-element */
+}
+
+.dashboard-card p {
+  margin-bottom: 10px; /* Reduced margin bottom */
+  font-size: 16px; /* Adjusted font size */
+  z-index: 1; /* Ensure content is above pseudo-element */
+}
+
+.dashboard-card .btn {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 15px; /* Reduced padding */
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  font-size: 16px; /* Adjusted font size */
+  z-index: 1; /* Ensure content is above pseudo-element */
+}
+
+.dashboard-card .btn:hover {
+  background-color: #0056b3;
+}
+
+/* Add hover effect */
+.dashboard-card:hover {
+  transform: translateY(-5px); /* Add hover effect */
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr); /* Two cards in one row */
+  }
+}
+
+/* Styles for the reports dropdown */
+.report-dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 1; /* Ensure the dropdown is above other elements */
+}
+
+.report-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #17252a; /* Background color */
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  right: 0;
+  overflow: hidden;
+}
+
+.report-dropdown-content a {
+  color: #feffff; /* Text color */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s;
+}
+
+.report-dropdown-content a:hover {
+  background-color: #3aafa9; /* Hover background color */
+}
+
+.report-dropdown:hover .report-dropdown-content {
+  display: block;
+}
+
+/* Adjusting spacing inside the dropdown */
+.report-dropdown-content {
+  padding: 8px 0;
+}
+
+.report-dropdown-content a {
+  padding: 10px 20px;
+}
+
+/* Adjust the margin-right for the report button */
+.dropdown .report-button {
+  margin-left: 800px;
+  margin-right: -50px; /* Set margin to 10px */
+}
+
+/* Style the report button */
+.report-button {
+  background-color: transparent; /* Remove background color */
+  color: #feffff;
+  padding: 10px 15px;
+  border: none; /* Remove border */
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-size: 18px;
+}
+
+.report-button:hover {
+  background-color: #2b7a78;
+}

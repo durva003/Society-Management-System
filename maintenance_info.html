@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='maintenance_info.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            
+            <h2>
+                <a href="{{ url_for('admin_dashboard') }}" id="backButton" class="button">Back</a>Maintenance Information
+                <button id="addMaintenanceButton" class="button">Add Maintenance</button>
+            </h2>
+            
+        </div>
+        <div id="maintenanceContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Maintenance ID</th>
+                        <th>Name</th>
+                        <th>Wing</th>
+                        <th>Flat No</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for maintenance in maintenances %}
+                    <tr>
+                        <td>{{ maintenance.maintenance_id }}</td>
+                        <td>{{ maintenance.name }}</td>
+                        <td>{{ maintenance.wing }}</td>
+                        <td>{{ maintenance.flat_no }}</td>
+                        <td>{{ maintenance.status }}</td>
+                    <td>
+    <button class="edit-button" onclick="openEditForm('{{ maintenance.maintenance_id }}', '{{ maintenance.name }}', '{{ maintenance.wing }}', '{{ maintenance.flat_no }}', '{{ maintenance.status }}')">Edit</button>
+    <button class="delete-button" onclick="confirmDelete('{{ maintenance.maintenance_id }}')">Delete</button>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- Add Maintenance Form -->
+<div id="addMaintenanceFormOverlay" class="overlay">
+    <div class="form-container">
+        <h2>Add Maintenance</h2>
+        <form id="addMaintenanceForm" action="{{ url_for('maintenance_info') }}" method="POST" onsubmit="return validateAddMaintenanceForm()">
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required pattern="[A-Za-z ]{1,50}" title="Only alphabets and spaces allowed, max 50 characters"><br><br>
+            
+            <label for="wing">Wing:</label>
+            <select id="wing" name="wing" required>
+                <option value="">Select Wing</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select><br><br>
+            
+            <label for="flat_no">Flat No:</label>
+            <input type="number" id="flat_no" name="flat_no" required min="101" max="1604"><br><br>
+            
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="">Select Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+            </select><br><br>
+            
+            <div class="button-container">
+                <button type="submit" id="addMaintenanceBtn">Add</button>
+                <button type="button" id="closeMaintenanceFormBtn" onclick="closeAddMaintenanceForm()">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Maintenance Form -->
+<div id="editMaintenanceFormOverlay" class="overlay">
+    <div class="form-container">
+        <h2>Edit Maintenance</h2>
+        <form id="editMaintenanceForm" action="{{ url_for('update_maintenance') }}" method="POST" onsubmit="return validateEditMaintenanceForm()">
+            <input type="hidden" id="editMaintenanceId" name="editMaintenanceId">
+            
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" name="editName" required pattern="[A-Za-z ]{1,50}" title="Only alphabets and spaces allowed, max 50 characters"><br><br>
+            
+            <label for="editWing">Wing:</label>
+            <select id="editWing" name="editWing" required>
+                <option value="">Select Wing</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select><br><br>
+            
+            <label for="editFlatNo">Flat No:</label>
+            <input type="number" id="editFlatNo" name="editFlatNo" required min="101" max="1604"><br><br>
+            
+            <label for="editStatus">Status:</label>
+            <select id="editStatus" name="editStatus" required>
+                <option value="">Select Status</option>
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+            </select><br><br>
+            
+            <div class="button-container">
+                <button type="submit" id="updateMaintenanceBtn">Update</button>
+                <button type="button" id="closeEditMaintenanceFormBtn" onclick="closeEditMaintenanceForm()">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('addMaintenanceButton').addEventListener('click', function() {
+        document.getElementById('addMaintenanceFormOverlay').style.display = 'block';
+    });
+
+    function closeAddMaintenanceForm() {
+        document.getElementById('addMaintenanceForm').reset();
+        document.getElementById('addMaintenanceFormOverlay').style.display = 'none';
+    }
+
+    function openEditForm(maintenance_id, name, wing, flat_no, status) {
+        document.getElementById('editMaintenanceId').value = maintenance_id;
+        document.getElementById('editName').value = name;
+        document.getElementById('editWing').value = wing;
+        document.getElementById('editFlatNo').value = flat_no;
+        document.getElementById('editStatus').value = status;
+
+        document.getElementById('editMaintenanceFormOverlay').style.display = 'block';
+    }
+
+    function closeEditMaintenanceForm() {
+        document.getElementById('editMaintenanceForm').reset();
+        document.getElementById('editMaintenanceFormOverlay').style.display = 'none';
+    }
+
+    function validateAddMaintenanceForm() {
+        var name = document.getElementById('name').value;
+        var wing = document.getElementById('wing').value;
+        var flatNo = document.getElementById('flat_no').value;
+        
+        var nameRegex = /^[A-Za-z\s]+$/;
+
+        if (!nameRegex.test(name)) {
+            alert("Please enter a valid name with only alphabets and spaces.");
+            return false;
+        }
+
+        if (wing === "") {
+            alert("Please select a wing.");
+            return false;
+        }
+
+        if (flatNo < 101 || flatNo > 1604) {
+            alert("Flat number must be between 101 and 1604.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function validateEditMaintenanceForm() {
+        var name = document.getElementById('editName').value;
+        var wing = document.getElementById('editWing').value;
+        var flatNo = document.getElementById('editFlatNo').value;
+        
+        var nameRegex = /^[A-Za-z\s]+$/;
+
+        if (!nameRegex.test(name)) {
+            alert("Please enter a valid name with only alphabets and spaces.");
+            return false;
+        }
+
+        if (wing === "") {
+            alert("Please select a wing.");
+            return false;
+        }
+
+        if (flatNo < 101 || flatNo > 1604) {
+            alert("Flat number must be between 101 and 1604.");
+            return false;
+        }
+
+        return true;
+    }
+
+    function confirmDelete(id) {
+        var result = confirm("Are you sure you want to delete this maintenance?");
+        if (result) {
+            window.location.href = "/delete_maintenance?id=" + id;
+        }
+    }
+</script>
+</body>
+</html>

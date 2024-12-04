@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='committee_report.css') }}">
+  <title>Committee Report</title>
+
+  <!-- jQuery and jQuery UI Datepicker -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+<body>
+
+<h1>Committee Report</h1>
+<div class="filter-container">
+    <input type="text" id="searchInput" class="filter-input" onkeyup="filterTable()" placeholder="Search...">
+    <input type="text" id="datepicker" class="calendar-input" placeholder="Select date...">
+    <button class="clear-btn" onclick="clearSearch()">Clear</button>
+    <button class="show-all-btn" onclick="showAll()">Show All</button>
+    <button class="back-btn" onclick="goBack()">Back</button>
+    {% if show_past_members %}
+        <form method="post">
+            <button class="hide-btn" type="submit" name="hide_past_members">Hide Past Members</button>
+        </form>
+    {% else %}
+        <form method="post">
+            <button class="show-btn" type="submit" name="show_past_members">Show Past Members</button>
+        </form>
+    {% endif %}
+</div>
+<table id="committeeTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Contact</th>
+      <th>Wing</th>
+      <th>Flat No</th>
+      <th>Joined</th>
+      <th>Resigned</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Display active members -->
+    {% for member in active_members %}
+    <tr>
+      <td>{{ member.name }}</td>
+      <td>{{ member.position }}</td>
+      <td>{{ member.contact }}</td>
+      <td>{{ member.wing }}</td>
+      <td>{{ member.flat_no }}</td>
+      <td>{{ member.joined }}</td>
+      <td>{{ member.resigned }}</td>
+      <td>{{ member.duration }}</td>
+    </tr>
+    {% endfor %}
+    
+    <!-- Display past members if the button is clicked -->
+    {% if show_past_members %}
+        {% for member in inactive_members %}
+        <tr>
+          <td>{{ member.name }}</td>
+          <td>{{ member.position }}</td>
+          <td>{{ member.contact }}</td>
+          <td>{{ member.wing }}</td>
+          <td>{{ member.flat_no }}</td>
+          <td>{{ member.joined }}</td>
+          <td>{{ member.resigned }}</td>
+          <td>{{ member.duration }}</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+    // Initialize jQuery UI Datepicker
+    $("#datepicker").datepicker({
+      dateFormat: 'yy-mm-dd',
+      onSelect: function(dateText) {
+        filterByDate(dateText);
+      }
+    });
+  });
+
+  // Function to filter table by date
+  function filterByDate(selectedDate) {
+    const table = document.getElementById('committeeTable');
+    const rows = table.getElementsByTagName('tr');
+  
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      let dateFound = false;
+  
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+        if (cell && cell.textContent.trim() === selectedDate) {
+          dateFound = true;
+          break;
+        }
+      }
+  
+      if (dateFound) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+
+  // Function to filter table based on search input
+  function filterTable() {
+    const input = document.getElementById('searchInput').value.toUpperCase();
+    const table = document.getElementById('committeeTable');
+    const rows = table.getElementsByTagName('tr');
+  
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      let found = false;
+  
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+        if (cell) {
+          const textValue = cell.textContent || cell.innerText;
+          if (textValue.toUpperCase().indexOf(input) > -1) {
+            found = true;
+            break;
+          }
+        }
+      }
+  
+      if (found) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+  
+  // Function to clear the search input
+  function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    filterTable();
+  }
+
+  // Function to display all rows
+  function showAll() {
+    const table = document.getElementById('committeeTable');
+    const rows = table.getElementsByTagName('tr');
+  
+    for (let i = 0; i < rows.length; i++) {
+      rows[i].style.display = '';
+    }
+  }
+
+  // Function to go back to admin dashboard
+  function goBack() {
+    window.location.href = "/admin_dashboard"; // Replace this with the actual route
+  }
+</script>
+
+</body>
+</html>

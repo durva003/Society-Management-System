@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='clubhouse_booking_form.css') }}">
+    <title>Clubhouse Booking Form</title>
+    <!-- FullCalendar CSS -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css' rel='stylesheet' />
+</head>
+<body>
+
+    <form action="{{ url_for('submit_booking') }}" method="POST">
+        <div id="alertMessage">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <h1>Clubhouse Booking Form</h1>
+        <label for="OwnerName">Owner Name:</label><br>
+        <input type="text" id="OwnerName" name="OwnerName" value="{{ existing_data['owner_name'] }}" readonly><br><br>
+
+        <label for="flatNo">Flat Number:</label><br>
+        <input type="text" id="flatNo" name="flatNo" value="{{ existing_data['flat_number'] }}" readonly><br><br>
+
+        <label for="wing">Wing:</label><br>
+        <input type="text" id="wing" name="wing" value="{{ existing_data['wing'] }}" readonly><br><br>
+
+        <label for="alternate_contact_no">Alternate Contact Number:</label><br>
+        <input type="tel" id="alternate_contact_no" name="alternate_contact_no" pattern="[0-9]{10}" title="Please enter a 10-digit number" required><br><br>
+
+        <label for="booking_date">Booking Date:</label><br>
+        <input type="date" id="booking_date" name="booking_date" required><br><br>
+
+        <label>Time:</label><br>
+        <input type="radio" id="fullDay" name="time" value="Full Day">
+        <label for="fullDay">Full Day</label><br>
+        <input type="radio" id="morning" name="time" value="Morning">
+        <label for="morning">Half Day (Morning)</label><br>
+        <input type="radio" id="evening" name="time" value="Evening">
+        <label for="evening">Half Day (Evening)</label><br><br>
+
+        </div>
+        <br>
+
+        <label for="reason">Reason:</label><br>
+        <input type="text" id="reason" name="reason" maxlength="255" required><br><br>
+
+        <label>Preference:</label><br>
+        <input type="radio" id="acPreference" name="preference" value="AC">
+        <label for="acPreference">AC</label><br>
+        <input type="radio" id="nonAcPreference" name="preference" value="Non AC">
+        <label for="nonAcPreference">Non AC</label><br><br>
+
+        <label>Payment Type:</label><br>
+        <input type="checkbox" id="chequePayment" name="payment_type" value="Cheque">
+        <label for="chequePayment">Cheque</label><br>
+        <input type="checkbox" id="cashPayment" name="payment_type" value="Cash">
+        <label for="cashPayment">Cash</label><br>
+        <input type="checkbox" id="onlinePayment" name="payment_type" value="Online">
+        <label for="onlinePayment">Online</label><br><br>
+
+        <input type="submit" value="Submit">
+        <div class="backButton" id="backButton"> 
+            <button onclick="redirectToDashboard()">Back</button>
+            </div>
+    </form>
+
+    <div id="calendar"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+    <script>
+        function redirectToDashboard() {
+            window.location.href = "{{ url_for('member_dashboard') }}";
+          }  
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    // Render booked dates in red
+                    {% for date in booked_dates %}
+                        { title: 'Booked', start: '{{ date }}', color: 'red' },
+                    {% endfor %}
+                ],
+                dateClick: function(info) {
+                    var clickedDate = new Date(info.dateStr);
+                    var currentDate = new Date(Date.now());
+                    if (clickedDate < currentDate) {
+                        showAlert('Booking for past dates is not allowed. Please select a future date.');
+                    } else {
+                        var bookedDates = {{ booked_dates | tojson }};
+                        if (bookedDates.includes(info.dateStr)) {
+                            showAlert('This date is already booked. Please choose another date.');
+                        } else {
+                            console.log('Selected date:', info.dateStr);
+                        }
+                    }
+                }
+            });     
+            calendar.render();
+        
+            // Function to show alert message
+            function showAlert(message) {
+                var alertMessage = document.getElementById('alertMessage');
+                alertMessage.innerHTML = '<div class="alert alert-error">' + message + '</div>';
+                // Clear the alert message after a certain time (e.g., 5 seconds)
+                setTimeout(function() {
+                    alertMessage.innerHTML = '';
+                }, 5000); // 5000 milliseconds = 5 seconds
+            }
+        });
+    </script>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='member_dashboard.css') }}">
+  <title>Member Dashboard</title>
+</head>
+<body>
+
+<div class="top-nav">
+  <div class="hamburger-icon" onclick="toggleSidebar()">&#9776;</div>
+  <p class="welcome-message">Welcome, {{ session['member_username'] }}!</p>
+  <div class="dropdown">
+    <span class="profile-icon" onclick="toggleDropdown()">&#128100;</span>
+    <div class="dropdown-content" id="dropdownContent">
+      <a href="{{ url_for('member_profile') }}">Profile</a>
+      <a href="{{ url_for('member_password') }}">Change Password</a>
+      <a href="{{ url_for('index') }}">Logout</a>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <span class="close-icon" onclick="toggleSidebar()">&times;</span>
+  <a href="{{ url_for('member_notice') }}">Notice</a>
+  <a href="{{ url_for('member_complaint_form') }}">Complaints And Suggestions</a>
+  <a href="{{ url_for('owner_form') }}">Owner Details</a>
+  <a href="{{ url_for('tenant_form') }}">Tenant Details</a>
+  <a href="{{ url_for('clubhouse_booking_form') }}">Clubhouse Booking</a>
+</div>
+
+<div class="main-content" id="mainContent">
+  <h3>Notices</h3>
+  <div class="notice-container">
+    {% if notices %}
+      <div class="notices-list">
+        {% for notice in notices|reverse %}
+          <div class="notice {% if notice.new %}new-notice{% endif %}">
+            <div class="notice-header">
+              <h4 class="notice-title">{{ notice.title }}</h4>
+              {% if notice.new %}
+                <div class="new-indicator"></div>
+              {% endif %}
+            </div>
+            <p class="notice-content">{{ notice.content }}</p>
+            <span class="notice-date">Date: {{ notice.date }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No notices available.</p>
+    {% endif %}
+  </div>
+
+  <h3>Maintenance List</h3>
+  <div class="maintenance-container">
+    <!-- Display maintenance list here -->
+    {% if maintenances %}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Wing</th>
+            <th>Flat No</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for maintenance in maintenances %}
+            <tr>
+              <td>{{ maintenance.name }}</td>
+              <td>{{ maintenance.wing }}</td>
+              <td>{{ maintenance.flat_no }}</td>
+              <td>{{ maintenance.status }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No maintenance records found.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function toggleSidebar() {
+  var sidebar = document.getElementById("sidebar");
+  var mainContent = document.getElementById("mainContent");
+  document.body.classList.toggle("sidebar-open");
+  sidebar.style.width = (sidebar.style.width === "250px") ? "0" : "250px";
+  mainContent.style.marginLeft = (mainContent.style.marginLeft === "250px") ? "0" : "250px";
+}
+
+function toggleDropdown() {
+  var dropdownContent = document.getElementById("dropdownContent");
+  dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.profile-icon')) {
+    var dropdownContent = document.getElementById("dropdownContent");
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    }
+  }
+}
+</script>
+
+</body>
+</html>

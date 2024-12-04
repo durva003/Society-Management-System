@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='owner_info.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('admin_dashboard') }}" id="backButton" class="button">Back</a>
+            <h2>Owner Information</h2>
+            
+        </div>
+        <div id="ownerContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Username</th>
+                        <th>Owner Name</th>
+                        <th>Wing</th>
+                        <th>Flat No</th>
+                        <th>Contact No</th>
+                        <th>Email ID</th>
+                        <th>Adults</th>
+                        <th>Children</th>
+                        <th>Pets</th>
+                        <th>Status</th>
+                        <th>Alternate Name</th>
+                        <th>Alternate Contact No</th>
+                        <th>Alternate Email</th>
+                        <th>4 Wheelers</th>
+                        <th>4 Wheelers Numberplate</th>
+                        <th>2 Wheelers</th>
+                        <th>2 Wheelers Numberplate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for owner in owners %}
+                    <tr>
+                        <td>{{ owner.member_id }}</td>
+                        <td>{{ owner.member_username }}</td>
+                        <td>{{ owner.owner_name }}</td>
+                        <td>{{ owner.wing }}</td>
+                        <td>{{ owner.flat_no }}</td>
+                        <td>{{ owner.contact_no }}</td>
+                        <td>{{ owner.email_id }}</td>
+                        <td>{{ owner.no_adult }}</td>
+                        <td>{{ owner.no_children }}</td>
+                        <td>{{ owner.no_pet }}</td>
+                        <td>{{ owner.current_status }}</td>
+                        <td>{{ owner.alternate_name }}</td>
+                        <td>{{ owner.alternate_contact_no }}</td>
+                        <td>{{ owner.alternate_email }}</td>
+                        <td>{{ owner.four_wheelers }}</td>
+                        <td>{{ owner.four_wheelers_numberplate }}</td>
+                        <td>{{ owner.two_wheelers }}</td>
+                        <td>{{ owner.two_wheelers_numberplate }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="?page={{ page - 1 }}" class="button">Previous</a>
+            {% endif %}
+            {% if has_next %}
+                <a href="?page={{ page + 1 }}" class="button">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function showAddOwnerForm() {
+            document.getElementById("addOwnerFormOverlay").style.display = "block";
+        }
+
+        function hideAddOwnerForm() {
+            document.getElementById("addOwnerFormOverlay").style.display = "none";
+        }
+    </script>
+    
+</body>
+</html>

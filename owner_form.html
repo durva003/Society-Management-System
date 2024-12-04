@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='owner_form.css') }}">
+</head>
+<body>
+  
+  <div class="container">
+    <form action="{{ url_for('submit_owner') }}" method="post">
+      <h1>Owner Form</h1>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+      <div class="row">
+        <div class="column">
+          <label for="memberUsername">Username:</label>
+          <input type="text" id="memberUsername" name="memberUsername" value="{{ existing_data['member_username'] }}" readonly>
+        </div>
+        <div class="column">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" value="{{ existing_data['password'] }}" readonly>
+        </div>
+        <div class="column">
+          <label for="ownerName">Owner Name:</label>
+          <input type="text" id="ownerName" name="ownerName" value="{{ existing_data['owner_name'] }}" pattern="[A-Za-z ]{1,50}" title="Only alphabets and spaces allowed, max 50 characters" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <label for="wing">Wing:</label>
+          <input type="text" id="wing" name="wing" maxlength="5" value="{{ existing_data['wing'] }}" readonly>
+        </div>
+        <div class="column">
+          <label for="flatNo">Flat Number:</label>
+          <input type="number" id="flatNo" name="flatNo" min="101" max="1604" value="{{ existing_data['flat_number'] }}" readonly>
+        </div>
+        <div class="column">
+          <label for="currentStatus">Current Status:</label>
+          <select id="currentStatus" name="currentStatus" required>
+            <option value="">Select</option>
+            <option value="living">Living</option>
+            <option value="rented">Rented</option>
+            <option value="vacant">Vacant</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <label for="contactNo">Contact Number:</label>
+          <input type="tel" id="contactNo" name="contactNo" pattern="[0-9]{10}" title="Please enter a 10-digit number" required>
+        </div>
+        <div class="column">
+          <label for="email">Email ID:</label>
+          <input type="email" id="email" name="email" maxlength="30" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address" required>
+        </div>
+        <div class="column">
+          <label for="noAdult">Number of Adults:</label>
+          <input type="number" id="noAdult" name="noAdult" min="0" max="99999" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <label for="noChildren">Number of Children:</label>
+          <input type="number" id="noChildren" name="noChildren" min="0" max="99999" required>
+        </div>
+        <div class="column">
+          <label for="noPet">Number of Pets:</label>
+          <input type="number" id="noPet" name="noPet" min="0" max="99999" required>
+        </div>
+        <div class="column">
+          <label for="altName">Alternate Name:</label>
+          <input type="text" id="altName" name="altName" maxlength="50" pattern="[A-Za-z ]{1,50}" title="Only alphabets and spaces allowed, max 50 characters" required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <label for="altContactNo">Alternate Contact Number:</label>
+          <input type="tel" id="altContactNo" name="altContactNo" pattern="[0-9]{10}" title="Please enter a 10-digit number" required>
+        </div>
+        <div class="column">
+          <label for="altEmail">Alternate Email ID:</label>
+          <input type="email" id="altEmail" name="altEmail" maxlength="30" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]+)*" title="Please enter a valid email address with only one dot allowed" required>
+
+        </div>
+        <div class="column">
+          <label for="fourWheelers">4 Wheelers:</label>
+          <input type="number" id="fourWheelers" name="fourWheelers" min="0" max="999999">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <label for="fourWheelersNumberplate">4 Wheelers Number Plate (e.g., XX00YY1234):</label>
+          <input type="text" id="fourWheelersNumberplate" name="fourWheelersNumberplate" maxlength="15" pattern="[A-Z]{2}[0-9]{2}\s[A-Z]{2}\s[0-9]{4}" title="Please enter a valid Indian number plate">
+        </div>
+        <div class="column">
+          <label for="twoWheelers">2 Wheelers:</label>
+          <input type="number" id="twoWheelers" name="twoWheelers" min="0" max="999999">
+        </div>
+        <div class="column">
+          <label for="twoWheelersNumberplate">2 Wheelers Number Plate (e.g., XX00YY1234):</label>
+          <input type="text" id="twoWheelersNumberplate" name="twoWheelersNumberplate" maxlength="15" pattern="[A-Z]{2}[0-9]{2}\s[A-Z]{2}\s[0-9]{4}" title="Please enter a valid Indian number plate">
+        </div>
+      </div>
+
+      <input type="submit" value="Submit">
+      <div class="backButton" id="backButton"> 
+      <button onclick="redirectToDashboard()">Back</button>
+      </div>
+
+    </form>
+  </div>
+
+  <script>
+    function redirectToDashboard() {
+      window.location.href = "{{ url_for('member_dashboard') }}";
+    }    
+  </script>
+</body>
+</html>

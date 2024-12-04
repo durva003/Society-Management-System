@@ -1,0 +1,241 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #def2f1; /* Light blue background */
+}
+
+/* Top navigation styles */
+.top-nav {
+  background-color: #17252a; /* Dark blue background */
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger-icon {
+  font-size: 24px;
+  color: #feffff; /* White color */
+  cursor: pointer;
+}
+
+.welcome-message {
+  color: #feffff; /* White color */
+  font-size: 18px;
+  margin: 0;
+}
+
+.notification-icon {
+  font-size: 24px;
+  color: #feffff; /* White color */
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.profile-icon {
+  font-family: 'FontAwesome';
+  font-size: 24px;
+  color: #feffff; /* White color */
+  cursor: pointer;
+}
+
+/* Dropdown styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2b7a78; /* Dark turquoise background */
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  right: 0;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #feffff; /* White color */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: flex; /* Make flex container */
+  align-items: center; /* Center items vertically */
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #3aafa9; /* Light turquoise background on hover */
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Adjusting spacing inside the dropdown */
+.dropdown-content {
+  padding: 8px 0;
+}
+
+.dropdown-content a span {
+  margin-left: 10px; /* Add margin between icon and text */
+}
+
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #17252a; /* Dark blue background */
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 1; /* Ensure sidebar is above main content */
+}
+
+.close-icon {
+  font-size: 30px;
+  color: #feffff; /* White color */
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  transition: transform 0.3s; /* Add transition for rotation */
+}
+
+.close-icon:hover {
+  transform: rotate(180deg); /* Rotate close icon on hover */
+}
+
+.sidebar a {
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #feffff; /* White color */
+  display: flex; /* Make flex container */
+  align-items: center; /* Center items vertically */
+  transition: 0.3s;
+  border-bottom: 1px solid #feffff; /* White border */
+}
+
+.sidebar a:last-child {
+  border-bottom: none;
+}
+
+.sidebar a:hover {
+  background-color: #feffff; /* White color on hover */
+  color: #17252a; /* Dark blue text on hover */
+}
+
+.main-content {
+  margin-left: 0;
+  padding: 20px;
+  background-color: #feffff; /* White background */
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.5s;
+  z-index: 0; /* Ensure main content is below sidebar */
+}
+
+.sidebar-open .main-content {
+  margin-left: 250px;
+}
+
+@media screen and (max-width: 600px) {
+  .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar-open .main-content {
+    margin-left: 0;
+  }
+}
+
+/* Styles for notices */
+.notice-container {
+  margin-top: 20px;
+}
+
+.notices-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 20px;
+}
+
+.notice {
+  background-color: #e0f7fa; /* Light cyan background */
+  border: 1px solid #26c6da; /* Cyan border */
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s; /* Add transition for hover effect */
+  position: relative; /* Added for red dot */
+}
+
+.notice:hover {
+  transform: translateY(-5px); /* Move notice up on hover */
+}
+
+.notice-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #00796b; /* Dark cyan text */
+}
+
+.notice-content {
+  font-size: 14px;
+  color: #424242; /* Dark grey text */
+}
+
+.notice-date {
+  font-size: 12px;
+  color: #616161; /* Grey text */
+  margin-top: 8px;
+}
+
+/* Red dot indicator */
+.new-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: #ff0000; /* Red color */
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+/* Maintenance List styles */
+.maintenance-container {
+  margin-top: 20px;
+}
+
+.maintenance-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.maintenance-container th,
+.maintenance-container td {
+  padding: 8px;
+  border: 1px solid #ccc;
+}
+
+.maintenance-container th {
+  background-color: #2b7a78;
+  color: #fff;
+  text-align: left;
+}
+
+.maintenance-container tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.maintenance-container tbody tr:hover {
+  background-color: #ddd;
+}
+

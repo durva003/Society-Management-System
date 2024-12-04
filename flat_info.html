@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='flat_info.css') }}">
+    <title>Flat Details</title>
+</head>
+<body>
+
+<div class="flat-info-container">
+    
+    <h2>
+        <div class="add-back-buttons">
+            <div class="back-button">
+                <button onclick="location.href='/admin_dashboard'">Back</button>
+            </div>
+        </div> Flat Details</h2>
+    
+    <table id="flatTable">
+        <thead>
+            <tr>
+                <th id="id-column">ID</th>
+                <th id="wing-column">Wing</th>
+                <th>Floor No</th>
+                <th>Flat No</th>
+                <th>Flat Type</th>
+                <th class="action-column">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flat in flats %}
+                <tr>
+                    <td>{{ flat.flat_id }}</td>
+                    <td>{{ flat.wing }}</td>
+                    <td>{{ flat.floor_no }}</td>
+                    <td>{{ flat.flat_no }}</td>
+                    <td>{{ flat.flat_type }}</td>
+                    <td class="action-column">
+                        <button class="edit-button" onclick="openEditForm({{ flat.flat_id }}, '{{ flat.wing }}', '{{ flat.floor_no }}', '{{ flat.flat_no }}', '{{ flat.flat_type }}')">Edit</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('flat_info', page=page-1) }}">Previous</a>
+        {% endif %}
+        <p>Page {{ page }}</p>
+        {% if flats|length == 10 %}
+            <a href="{{ url_for('flat_info', page=page+1) }}">Next</a>
+        {% endif %}
+    </div>
+    
+</div>
+
+<!-- Edit Flat Form Container -->
+<div class="edit-form-container" id="editFlatForm">
+    <h2>Edit Flat</h2>
+
+    <form onsubmit="return submitEditForm()" method="post" action="{{ url_for('update_flat') }}">
+        <input type="hidden" id="editFlatId" name="editFlatId">
+        <div class="form-group">
+            <label for="editWing">Wing:</label>
+            <select id="editWing" name="editWing" required>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="editFloorNo">Floor No:</label>
+            <input type="number" id="editFloorNo" name="editFloorNo" min="1" max="16" required>
+        </div>
+        <div class="form-group">
+            <label for="editFlatNo">Flat No:</label>
+            <input type="number" id="editFlatNo" name="editFlatNo" min="101" max="1604" required>
+        </div>
+        <div class="form-group">
+            <label for="editFlatType">Flat Type:</label>
+            <select id="editFlatType" name="editFlatType" required>
+                <option value="1BHK">1BHK</option>
+                <option value="2BHK">2BHK</option>
+                <option value="3BHK">3BHK</option>
+            </select>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="update-button">Update</button>
+            <button type="button" class="close-button" onclick="closeEditForm()">Close</button>
+        </div>
+    </form>
+
+    <!-- Pop-up Message for Edit Flat Form -->
+    <div class="popup-message" id="editFlatMessage"></div>
+</div>
+
+<script>
+    function openEditForm(id, wing, floor_no, flat_no, flat_type) {
+        document.getElementById('editFlatId').value = id;
+        document.getElementById('editWing').value = wing;
+        document.getElementById('editFloorNo').value = floor_no;
+        document.getElementById('editFlatNo').value = flat_no;
+        document.getElementById('editFlatType').value = flat_type;
+    
+        document.getElementById('editFlatForm').style.display = 'block'; // Show the edit form
+    }
+    
+    function closeEditForm() {
+        document.getElementById('editFlatForm').style.display = 'none'; // Hide the edit form
+        closeEditMessage(); // Close the editFlatMessage if it's open
+    }
+    
+    
+    function submitEditForm() {
+        // Simulate a successful submission for demonstration purposes
+        const isSuccess = true;
+    
+        // Display the appropriate message for Edit Flat Form
+        const editMessageElement = document.getElementById('editFlatMessage');
+        editMessageElement.innerText = isSuccess ? 'Data updated successfully' : 'Error';
+        editMessageElement.style.backgroundColor = isSuccess ? '#4caf50' : '#e74c3c';
+        editMessageElement.style.display = 'block';
+    }
+    
+    function closeEditMessage() {
+        document.getElementById('editFlatMessage').style.display = 'none';
+    }
+</script>
+    
+</body>
+</html>

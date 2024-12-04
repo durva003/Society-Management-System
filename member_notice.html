@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='notice.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('member_dashboard') }}" id="backButton" class="button">Back</a>
+            <h2>Notices Info</h2>
+        </div>
+        <div id="noticeContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for notice in notices[::-1] %}  <!-- Reverse the order of notices -->
+                    <tr>
+                        <td>{{ notice.title }}</td>
+                        <td>{{ notice.content }}</td>
+                        <td>{{ notice.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="?page={{ page - 1 }}" class="button">Previous</a>
+            {% endif %}
+            {% if has_next %}
+                <a href="?page={{ page + 1 }}" class="button">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

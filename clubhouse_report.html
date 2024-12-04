@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='clubhouse_report.css') }}">
+    <title>Clubhouse Report</title>
+</head>
+<body>
+
+<h1>Clubhouse Report</h1>
+<div class="filter-container">
+    <input type="text" id="searchInput" class="filter-input" onkeyup="filterTable()" placeholder="Search...">
+    <input type="date" id="dateInput" class="filter-input" onchange="filterTableByDate()" placeholder="Select Date">
+    <button class="clear-btn" onclick="clearSearch()">Clear</button>
+    <button class="show-all-btn" onclick="showAll()">Show All</button>
+    <button class="back-btn" onclick="goBack()">Back</button>
+</div>
+<table id="clubhouseTable">
+    <thead>
+    <tr>
+        <th>Member ID</th>
+        <th>Owner Name</th>
+        <th>Flat No</th>
+        <th>Wing</th>
+        <th>Alternate Contact</th>
+        <th>Booking Date</th>
+        <th>Time</th>
+        <th>Reason</th>
+        <th>Preference</th>
+        <th>Payment Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Display clubhouse booking details -->
+    {% for booking in bookings %}
+    <tr>
+        <td>{{ booking.member_id }}</td>
+        <td>{{ booking.owner_name }}</td>
+        <td>{{ booking.flat_no }}</td>
+        <td>{{ booking.wing }}</td>
+        <td>{{ booking.alternate_contact_no }}</td>
+        <td>{{ booking.booking_date }}</td>
+        <td>{{ booking.time }}</td>
+        <td>{{ booking.reason }}</td>
+        <td>{{ booking.preference }}</td>
+        <td>{{ booking.payment_type }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    // Function to filter table based on search input
+    function filterTable() {
+        const input = document.getElementById('searchInput').value.toUpperCase();
+        const table = document.getElementById('clubhouseTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let found = false;
+
+            for (let j = 0; j < cells.length; j++) {
+                const cell = cells[j];
+                if (cell) {
+                    const textValue = cell.textContent || cell.innerText;
+                    if (textValue.toUpperCase().indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (found) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+
+    // Function to filter table by selected date
+    function filterTableByDate() {
+        const selectedDate = document.getElementById('dateInput').value;
+        const table = document.getElementById('clubhouseTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName('td');
+            let bookingDate = cells[5].textContent || cells[5].innerText; // Assuming booking date is in the 6th column
+
+            if (selectedDate === bookingDate) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+
+    // Function to clear the search input and date input
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('dateInput').value = '';
+        filterTable();
+    }
+
+    // Function to show all rows
+    function showAll() {
+        const table = document.getElementById('clubhouseTable');
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = '';
+        }
+    }
+
+    // Function to go back to admin dashboard
+    function goBack() {
+        window.location.href = "/admin_dashboard"; // Replace this with the actual route
+    }
+</script>
+
+</body>
+</html>

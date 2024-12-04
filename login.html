@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <title>Login Page</title>
+</head>
+<body>
+
+<!-- Full-screen background image -->
+<div class="background-image">
+    <img src="{{ url_for('static', filename='images/bg4.jpg') }}" alt="Background Image">
+</div>
+
+<!-- Login container on the right -->
+<div class="login-container">
+    <h1 class="castle-heading">Sky View Castle</h1>
+
+    <div class="login-buttons">
+        <button class="admin-button" onclick="openForm('adminForm')">Admin</button>
+        <button class="member-button" onclick="openForm('memberForm')">Member</button>
+    </div>
+
+    <!-- Admin Form -->
+    <form id="adminForm" class="login-form" method="POST" action="{{ url_for('admin_login') }}" onsubmit="return validateForm('adminForm')">
+        <h2>Admin Login</h2>
+        <div id="alertMessageAdmin">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="form-group">
+            <label for="adminUsername">Username</label>
+            <input type="text" id="adminUsername" name="adminUsername" required>
+        </div>
+
+        <div class="form-group">
+            <label for="adminPassword">Password (max 8 characters)</label>
+            <input type="password" id="adminPassword" name="adminPassword" required maxlength="8">
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="submit-button">Submit</button>
+            <button type="button" class="clear-button" onclick="clearForm('adminForm')">Clear</button>
+        </div>
+    </form>
+
+    <!-- Member Form -->
+    <form id="memberForm" class="login-form" method="POST" action="{{ url_for('member_login') }}" style="display: none;" onsubmit="return validateForm('memberForm')">
+        <h2>Member Login</h2>
+        <div id="alertMessageMember">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <div class="form-group">
+            <label for="memberUsername">Username</label>
+            <input type="text" id="memberUsername" name="memberUsername" required>
+        </div>
+
+        <div class="form-group">
+            <label for="memberPassword">Password (max 8 characters)</label>
+            <input type="password" id="memberPassword" name="memberPassword" required maxlength="8">
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="submit-button">Submit</button>
+            <button type="button" class="clear-button" onclick="clearForm('memberForm')">Clear</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function clearForm(formName) {
+        // Clear the form
+        document.getElementById(formName).reset();
+
+        // Show the cleared form
+        document.getElementById(formName).style.display = 'block';
+    }
+
+    function openForm(formName) {
+        // Hide all forms
+        document.getElementById('adminForm').style.display = 'none';
+        document.getElementById('memberForm').style.display = 'none';
+
+        // Display the selected form
+        document.getElementById(formName).style.display = 'block';
+    }
+
+    function validateForm(formName) {
+        // Using HTML5 validation
+        return document.getElementById(formName).checkValidity();
+    }
+
+    // Function to show alert message
+    function showAlert(message, alertType) {
+        var alertMessage;
+        if (alertType === 'admin') {
+            alertMessage = document.getElementById('alertMessageAdmin');
+        } else {
+            alertMessage = document.getElementById('alertMessageMember');
+        }
+        alertMessage.innerHTML = '<div class="alert alert-error">' + message + '</div>';
+        // Clear the alert message after a certain time (e.g., 5 seconds)
+        setTimeout(function() {
+            alertMessage.innerHTML = '';
+        }, 5000); // 5000 milliseconds = 5 seconds
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='complaint.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Complaints Table -->
+        <div class="table-container">
+            <h1 class="header">
+                <button class="back-button" onclick="goBack()">Back</button>
+                <div class="title">Complaints and Suggestions</div>
+                <div class="search-container">
+                    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
+                </div>
+            </h1>
+            
+            <table id="complaintsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Wing</th>
+                        <th>Flat No</th>
+                        <th>Date of Complaint</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Resolved Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for complaint in complaints %}
+                        <tr>
+                            <td>{{ complaint.complaint_id }}</td>
+                            <td>{{ complaint.wing }}</td>
+                            <td>{{ complaint.flat_no }}</td>
+                            <td>{{ complaint.date_of_complaint }}</td>
+                            <td>{{ complaint.reason }}</td>
+                            <td>
+                                <form action="{{ url_for('admin_update_complaint') }}" method="post">
+                                    <input type="hidden" name="complaint_id" value="{{ complaint.complaint_id }}">
+                                    <select name="status" onchange="confirmStatusChange(this)" class="status-dropdown">
+                                        <option value="Pending" {% if complaint.status == 'Pending' %} selected {% endif %}>Pending</option>
+                                        <option value="Resolved" {% if complaint.status == 'Resolved' %} selected {% endif %}>Resolved</option>
+                                        <option value="On Hold" {% if complaint.status == 'On Hold' %} selected {% endif %}>On Hold</option>
+                                    </select>
+                                    <button type="submit" class="update-button">Update</button>
+                                    <input type="hidden" name="resolved_date" id="resolved_date_{{ complaint.complaint_id }}" value="{{ complaint.resolved_date }}">
+                                </form>
+                            </td>
+                            <td>
+                                <input type="text" class="datepicker" id="datepicker_{{ complaint.complaint_id }}" name="resolved_date_display" value="{{ complaint.resolved_date }}" readonly>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- JavaScript for confirming status change -->
+    <script>
+        function confirmStatusChange(select) {
+            var currentDateId = "resolved_date_" + select.form.elements['complaint_id'].value;
+            var currentDateInput = document.getElementById(currentDateId);
+            var currentDate = new Date().toISOString().slice(0, 10);
+            currentDateInput.value = currentDate;
+            
+            var datepickerId = "datepicker_" + select.form.elements['complaint_id'].value;
+            var datepicker = document.getElementById(datepickerId);
+            
+            if (select.value === 'Resolved' || select.value === 'On Hold') {
+                datepicker.value = currentDate;
+            }
+            
+            if (select.value === 'Resolved') {
+                var result = confirm("Are you sure you want to mark this complaint as resolved?");
+                if (!result) {
+                    select.value = 'Pending';
+                    datepicker.value = '';
+                }
+            } else if (select.value === 'On Hold') {
+                var result = confirm("Are you sure you want to put this complaint on hold?");
+                if (!result) {
+                    select.value = 'Pending';
+                    datepicker.value = '';
+                }
+            }
+        }
+
+        function goBack() {
+            window.location.href = "{{ url_for('admin_dashboard') }}";
+        }
+
+        function searchTable() {
+            var input, filter, table, tr, td, i, j, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("complaintsTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td");
+                var found = false;
+                for (j = 0; j < td.length; j++) {
+                    if (td[j]) {
+                        txtValue = td[j].textContent || td[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
+                    var select = tr[i].querySelector("select");
+                    if (select) {
+                        var selectValue = select.options[select.selectedIndex].text.toUpperCase();
+                        if (selectValue.indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        
+    </script>
+</body>
+</html>

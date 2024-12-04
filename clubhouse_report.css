@@ -1,0 +1,97 @@
+/* Reset CSS for consistent rendering */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #def2f1; /* Background color */
+    color: #17252a; /* Text color */
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px; /* Added padding to give some space around the content */
+}
+
+/* Heading styles */
+h1 {
+    font-size: 24px;
+    color: #2b7a78; /* Header text color */
+    margin-bottom: 20px;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #feffff;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    text-align: left;
+    font-size: 14px;
+}
+
+th:first-child,
+td:first-child {
+    border-left: none;
+}
+
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+th {
+    background-color: #2b7a78; /* Table header background color */
+    color: #feffff;
+    text-transform: uppercase;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #feffff; /* Alternate row background color */
+}
+
+/* Hover effect on table rows */
+tbody tr:hover {
+    background-color: #def2f1; /* Hovered row background color */
+}
+
+/* Filter container styles */
+.filter-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex: 1;
+}
+
+.clear-btn, .show-all-btn, .back-btn {
+    padding: 8px 16px;
+    background-color: #3aafa9; /* Button background color */
+    color: #feffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+.clear-btn:hover, .show-all-btn:hover, .back-btn:hover {
+    background-color: #2b7a78; /* Button background color on hover */
+}

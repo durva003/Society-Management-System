@@ -1,0 +1,144 @@
+/* Reset CSS for consistent rendering */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full-screen background image */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%; /* Take half of the screen */
+    height: 100%;
+    z-index: -1;
+}
+
+.background-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Login container on the right */
+.login-container {
+    position: fixed;
+    top: 50%;
+    right: 25%;
+    transform: translate(50%, -50%);
+    width: 50%; /* Take half of the screen */
+    max-width: 400px; /* Adjust as needed */
+    padding: 40px 20px;
+    background-color: #DEF2F1; /* Background color */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif; /* Font family */
+}
+
+/* Heading styles */
+.castle-heading {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #17252A; /* Text color */
+}
+
+/* Login button styles */
+.login-buttons {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.admin-button,
+.member-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.admin-button {
+    background-color: #2B7A78; /* Button color */
+    color: white; /* Text color */
+}
+
+.member-button {
+    background-color: #3AAFA9; /* Button color */
+    color: white; /* Text color */
+}
+
+.admin-button:hover,
+.member-button:hover {
+    background-color: #17252A; /* Button color on hover */
+}
+
+/* Form styles */
+.login-form {
+    display: none;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+    color: #17252A; /* Text color */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #17252A; /* Text color */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 22px); /* Adjust to accommodate padding and borders */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-buttons {
+    text-align: center;
+}
+
+.submit-button,
+.clear-button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button {
+    background-color: #2B7A78; /* Button color */
+    color: white; /* Text color */
+}
+
+.clear-button {
+    background-color: #f44336; /* Button color */
+    color: white; /* Text color */
+}
+
+.submit-button:hover,
+.clear-button:hover {
+    background-color: #3AAFA9; /* Button color on hover */
+}
+
+/* Alert styles */
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-error {
+    background-color: #f44336;
+    color: white;
+}

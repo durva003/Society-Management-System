@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='owner_info.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('admin_dashboard') }}" id="backButton" class="button">Back</a>
+            <h2>Tenant Information</h2>
+        </div>
+        <div id="tenantContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Username</th>
+                        <th>Owner Name</th>
+                        <th>Wing</th>
+                        <th>Flat No</th>
+                        <th>Tenant Name</th>
+                        <th>Tenant Contact</th>
+                        <th>Tenant Email</th>
+                        <th>Adults</th>
+                        <th>Children</th>
+                        <th>Pets</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tenant in tenants %}
+                    <tr>
+                        <td>{{ tenant.member_id }}</td>
+                        <td>{{ tenant.member_username }}</td>
+                        <td>{{ tenant.owner_name }}</td>
+                        <td>{{ tenant.wing }}</td>
+                        <td>{{ tenant.flat_no }}</td>
+                        <td>{{ tenant.tenant_name }}</td>
+                        <td>{{ tenant.tenant_contact }}</td>
+                        <td>{{ tenant.tenant_email }}</td>
+                        <td>{{ tenant.no_adult }}</td>
+                        <td>{{ tenant.no_children }}</td>
+                        <td>{{ tenant.no_pet }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="?page={{ page - 1 }}" class="button">Previous</a>
+            {% endif %}
+            {% if has_next %}
+                <a href="?page={{ page + 1 }}" class="button">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code for handling add and edit tenant forms
+    </script>
+</body>
+</html>

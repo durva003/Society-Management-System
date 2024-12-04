@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notice Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='notice.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('admin_dashboard') }}" id="backButton" class="button">Back</a>
+            
+            <h2>Notices Info</h2>
+            <button id="addNoticeButton" class="button">Add Notice</button>
+        </div>
+        <div id="noticeContainer">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for notice in notices %}
+                    <tr>
+                        <td>{{ notice.id }}</td>
+                        <td>{{ notice.title }}</td>
+                        <td>{{ notice.content }}</td>
+                        <td>{{ notice.date }}</td>
+                        <td>
+                            <button class="edit-button" onclick="openEditForm('{{ notice.id }}', '{{ notice.title }}', '{{ notice.content }}', '{{ notice.date }}')">Edit</button>
+                            <button class="delete-button" onclick="confirmDelete('{{ notice.id }}')">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="?page={{ page - 1 }}" class="button">Previous</a>
+            {% endif %}
+            {% if has_next %}
+                <a href="?page={{ page + 1 }}" class="button">Next</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Add Notice Form -->
+    <div id="addNoticeFormOverlay" class="overlay">
+        <div class="form-container">
+            <h2>Add Notice</h2>
+            <form id="addNoticeForm" action="{{ url_for('notice_info') }}" method="POST">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br><br>
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" required></textarea><br><br>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required min="{{ current_date }}" max="{{ current_date }}"><br><br>
+
+                <div class="button-container">
+                    <button type="submit" id="addNoticeBtn">Add</button>
+                    <button type="button" id="clearNoticeBtn">Clear</button>
+                    <button type="button" id="closeNoticeFormBtn">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Notice Form -->
+    <div id="editNoticeFormOverlay" class="overlay">
+        <div class="form-container">
+            <h2>Edit Notice</h2>
+            <form id="editNoticeForm" action="{{ url_for('update_notice') }}" method="POST">
+                <input type="hidden" id="editNoticeId" name="editNoticeId">
+                <label for="editTitle">Title:</label>
+                <input type="text" id="editTitle" name="editTitle" required><br><br>
+                <label for="editContent">Content:</label>
+                <textarea id="editContent" name="editContent" required></textarea><br><br>
+                <label for="editDate">Date:</label>
+                <input type="date" id="editDate" name="editDate" required><br><br>
+                <div class="button-container">
+                    <button type="submit" id="updateNoticeBtn">Update</button>
+                    <button type="button" id="closeEditNoticeFormBtn">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addNoticeButton').addEventListener('click', function() {
+            document.getElementById('addNoticeFormOverlay').style.display = 'block';
+        });
+
+        document.getElementById('closeNoticeFormBtn').addEventListener('click', function() {
+            document.getElementById('addNoticeFormOverlay').style.display = 'none';
+        });
+
+        document.getElementById('clearNoticeBtn').addEventListener('click', function() {
+            document.getElementById('addNoticeForm').reset();
+        });
+
+        function openEditForm(id, title, content, date) {
+            document.getElementById('editNoticeId').value = id;
+            document.getElementById('editTitle').value = title;
+            document.getElementById('editContent').value = content;
+            document.getElementById('editDate').value = date;
+
+            document.getElementById('editNoticeFormOverlay').style.display = 'block';
+        }
+
+        document.getElementById('closeEditNoticeFormBtn').addEventListener('click', function() {
+            document.getElementById('editNoticeFormOverlay').style.display = 'none';
+        });
+
+        function confirmDelete(id) {
+            var result = confirm("Are you sure you want to delete this notice?");
+            if (result) {
+                window.location.href = "/delete_notice?id=" + id;
+            }
+        }
+    </script>
+</body>
+</html>

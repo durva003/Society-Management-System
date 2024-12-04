@@ -1,0 +1,205 @@
+/* Reset CSS for consistent rendering */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #def2f1; /* Background color */
+    color: #17252a; /* Text color */
+    line-height: 1.6;
+}
+
+/* Container styles */
+.container {
+    width: 100%;
+    margin: 15px auto;
+    padding: 15px 20px; /* Added padding */
+    background-color: #feffff;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    font-size: 24px;
+    color: #2b7a78;
+    text-transform: uppercase;
+}
+
+/* Button styles */
+.button {
+    padding: 8px 16px;
+    background-color: #57ba98;
+    color: #feffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #3ba19d;
+    text-decoration: none;
+}
+
+/* Notice table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    text-align: left;
+    font-size: 14px;
+}
+
+th:first-child,
+td:first-child {
+    border-left: none;
+}
+
+th:last-child,
+td:last-child {
+    border-right: none;
+}
+
+th {
+    background-color: #2b7a78;
+    color: #feffff;
+    text-transform: uppercase;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #feffff;
+}
+
+/* Hover effect on table rows */
+tbody tr:hover {
+    background-color: #def2f1;
+}
+
+/* Pagination styles */
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #feffff;
+    background-color: #3aafa9;
+    border-radius: 4px;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #2b7a78;
+}
+
+/* Form Container styles */
+.form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    display: none;
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    width: 60%;
+}
+
+/* Overlay styles */
+#addCommitteeFormOverlay,
+#editCommitteeFormOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    color: #17252a;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #17252a;
+}
+
+input[type="text"],
+textarea {
+    width: calc(100% - 22px); /* Adjusted width to account for padding and border */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Arial', sans-serif;
+}
+
+textarea {
+    height: 100px;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+}
+
+#addCommitteeBtn,
+#updateCommitteeBtn,
+#clearCommitteeBtn,
+#backButton {
+    background-color: #3aafa9;
+    color: #feffff;
+}
+
+#addCommitteeBtn:hover,
+#updateCommitteeBtn:hover,
+#clearCommitteeBtn:hover,
+#backButton:hover {
+    background-color: #2b7a78;
+}

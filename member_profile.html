@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #def2f1;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .profile-container {
+            max-width: 450px; /* Increased width */
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #feffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .profile-form {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px; /* Reduced gap */
+            color: #17252a;
+        }
+        
+        input {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px; /* Reduced gap */
+            border: 1px solid #2b7a78;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #17252a;
+        }
+        
+        .back-button, .edit-button {
+            width: 48%;
+            padding: 12px; /* Adjusted padding */
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            background-color: #2b7a78;
+            color: #feffff;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        
+        .back-button:hover, .edit-button:hover {
+            background-color: #3aafa9;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>Member Profile</h2>
+
+        {% if member_profile %}
+            <form class="profile-form">
+                <div class="form-group">
+                    <label for="memberName">Name:</label>
+                    <input type="text" id="memberName" name="memberName" value="{{ member_profile['owner_name'] }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberWing">Wing:</label>
+                    <input type="text" id="memberWing" name="memberWing" value="{{ member_profile['wing'] }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberFlat">Flat No:</label>
+                    <input type="text" id="memberFlat" name="memberFlat" value="{{ member_profile['flat_number'] }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="memberUsername">Username:</label>
+                    <input type="text" id="memberUsername" name="memberUsername" value="{{ member_profile['member_username'] }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="parkingSlot">Parking Slot:</label>
+                    <input type="text" id="parkingSlot" name="parkingSlot" value="{{ member_profile.get('parking_slot') }}" readonly>
+                </div>
+            </form>
+        {% else %}
+            <p>Error fetching member profile.</p>
+        {% endif %}
+
+        <a href="{{ url_for('member_dashboard') }}" class="back-button">Back</a>
+    </div>
+</body>
+</html>

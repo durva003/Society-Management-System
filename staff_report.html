@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='staff_report.css') }}">
+  <title>Staff Report</title>
+  
+  <!-- jQuery and jQuery UI Datepicker -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+<body>
+
+<h1>Staff Report</h1>
+<div class="filter-container">
+    <input type="text" id="searchInput" class="filter-input" onkeyup="filterTable()" placeholder="Search...">
+    <input type="text" id="datepicker" class="datepicker" placeholder="Select date...">
+    <button class="clear-btn" onclick="clearSearch()">Clear</button>
+    <button class="show-all-btn" onclick="showAll()">Show All</button>
+    <button class="back-btn" onclick="goBack()">Back</button>
+</div>
+<table id="staffTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Work</th>
+      <th>Contact</th>
+      <th>Address</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Display staff members -->
+    {% for staff in staff_members %}
+    <tr>
+      <td>{{ staff.name }}</td>
+      <td>{{ staff.work }}</td>
+      <td>{{ staff.contact }}</td>
+      <td>{{ staff.address }}</td>
+      <td>{{ staff.start }}</td>
+      <td>{{ staff.end }}</td>
+      <td>{{ staff.duration }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  $(function() {
+    $("#datepicker").datepicker({
+      dateFormat: 'yy-mm-dd',
+      onSelect: function(dateText) {
+        filterTable();
+      }
+    });
+  });
+
+  // Function to filter table based on search input and selected date
+  function filterTable() {
+    const input = document.getElementById('searchInput').value.toUpperCase();
+    const selectedDate = document.getElementById('datepicker').value;
+    const table = document.getElementById('staffTable');
+    const rows = table.getElementsByTagName('tr');
+  
+    for (let i = 0; i < rows.length; i++) {
+      const cells = rows[i].getElementsByTagName('td');
+      let found = false;
+  
+      for (let j = 0; j < cells.length; j++) {
+        const cell = cells[j];
+        if (cell) {
+          const textValue = cell.textContent || cell.innerText;
+          if (textValue.toUpperCase().indexOf(input) > -1 || textValue.includes(selectedDate)) {
+            found = true;
+            break;
+          }
+        }
+      }
+  
+      if (found) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+  
+  // Function to clear the search input and date picker
+  function clearSearch() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('datepicker').value = '';
+    filterTable();
+  }
+
+  // Function to show all rows
+  function showAll() {
+    const table = document.getElementById('staffTable');
+    const rows = table.getElementsByTagName('tr');
+  
+    for (let i = 0; i < rows.length; i++) {
+      rows[i].style.display = '';
+    }
+  }
+
+  // Function to go back to admin dashboard
+  function goBack() {
+    window.location.href = "/admin_dashboard"; // Replace this with the actual route
+  }
+</script>
+
+</body>
+</html>
